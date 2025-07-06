@@ -7,8 +7,8 @@ SDL_Window* mainwindow = nullptr;
 SDL_Surface* background = nullptr;
 SDL_Renderer* backgroundrender = nullptr;
 
-const int length = 1024;
-const int width = 768;
+const int screenLength = 990;
+const int screenWidth = 570;
 
 
 int main(int argc, char *argv[])
@@ -24,13 +24,20 @@ int main(int argc, char *argv[])
     {
         bool gamerunning = true;
 
-
-        mainwindow = SDL_CreateWindow("Testing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_SHOWN);
+        
+        mainwindow = SDL_CreateWindow("Testing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenLength, screenWidth, SDL_WINDOW_SHOWN);
         SDL_Surface* appicon = nullptr;
+
+
         appicon = SDL_LoadBMP("imageresources/larry.bmp");  
         SDL_SetWindowIcon(mainwindow,appicon);
 
         SDL_FreeSurface(appicon);
+
+        backgroundrender = SDL_CreateRenderer(mainwindow, -1, SDL_RENDERER_ACCELERATED);
+        SDL_SetRenderDrawColor(backgroundrender, 0, 50, 255, 255);
+        SDL_RenderClear(backgroundrender);
+        SDL_RenderPresent(backgroundrender);
 
 
         if(mainwindow = NULL)
@@ -57,9 +64,11 @@ int main(int argc, char *argv[])
         }
 
         SDL_DestroyWindow(mainwindow);
+        SDL_DestroyRenderer(backgroundrender);
         SDL_Quit();
 
         mainwindow = nullptr;
+        backgroundrender = nullptr;
 
         return 0;
     }
