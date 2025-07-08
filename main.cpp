@@ -1,14 +1,14 @@
 #define SDL_MAIN_HANDLED
 
-#include "src/include/SDL2/SDL.h"
-#include <iostream>
+#include "gamegrid.hpp"
 
 SDL_Window* mainwindow = nullptr;
 SDL_Surface* background = nullptr;
 SDL_Renderer* backgroundrender = nullptr;
 
-const int screenLength = 990;
-const int screenWidth = 570;
+
+const int screenLength = 570;
+const int screenWidth = 990;
 
 
 int main(int argc, char *argv[])
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         bool gamerunning = true;
 
         
-        mainwindow = SDL_CreateWindow("Testing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenLength, screenWidth, SDL_WINDOW_SHOWN);
+        mainwindow = SDL_CreateWindow("Testing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenLength, SDL_WINDOW_SHOWN);
         SDL_Surface* appicon = nullptr;
 
 
@@ -36,11 +36,17 @@ int main(int argc, char *argv[])
 
         backgroundrender = SDL_CreateRenderer(mainwindow, -1, SDL_RENDERER_ACCELERATED);
         SDL_SetRenderDrawColor(backgroundrender, 0, 50, 255, 255);
+
         SDL_RenderClear(backgroundrender);
         SDL_RenderPresent(backgroundrender);
 
+        SDL_SetRenderDrawColor(backgroundrender, 0, 0, 0, 0);
 
-        if(mainwindow = NULL)
+        gamegrid maingamegrid = gamegrid(22, 10, backgroundrender, screenLength, screenWidth);
+        printf("Grid Succesfully created\n");
+
+
+        if(mainwindow == NULL)
         {
             printf("Failed to create window. Exiting....");
             return -1;
@@ -66,6 +72,8 @@ int main(int argc, char *argv[])
         SDL_DestroyWindow(mainwindow);
         SDL_DestroyRenderer(backgroundrender);
         SDL_Quit();
+
+        printf("Program exited\n");
 
         mainwindow = nullptr;
         backgroundrender = nullptr;
