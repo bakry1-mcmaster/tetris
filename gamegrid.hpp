@@ -5,6 +5,7 @@
 struct gridspace
 {
     bool occupiedspace;
+    bool movingspace;
     SDL_Rect gridsquare;
 
 };
@@ -31,6 +32,18 @@ class gamegrid
         void renderReference(SDL_Renderer* gamerender);
         void createBoard();
         void renderBoard();
+
+        void clearRow(int rowindex);
+        void pushRowDown(int rowindex);
+        void clearAll();
+
+
+        gridspace** getGrid();
+        int getGridHeight();
+        int getGridWidth();
+
+        bool checkRowFull();
+
 
 
 

@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
                         gamerunning = false;
                         break;
                     
+                    
                     default:
                         break;
                 }

@@ -97,6 +97,7 @@ void gamegrid::createBoard()
         for(int col = 0; col<gridHeight; col++)
         {
             grids[row][col].occupiedspace = false;
+            grids[row][col].movingspace = false;
             grids[row][col].gridsquare.h = segment;
             grids[row][col].gridsquare.w = segment;
             grids[row][col].gridsquare.x = originX+col*segment + spacing*col;
@@ -123,4 +124,81 @@ void gamegrid::renderBoard()
     }
 
     SDL_RenderPresent(gridrender);
+}
+
+gridspace** gamegrid::getGrid()
+{
+    return grids;
+}
+
+
+int gamegrid::getGridHeight()
+{
+    return gridHeight;
+}
+
+
+
+int gamegrid::getGridWidth()
+{
+    return gridWidth;
+}
+
+
+void gamegrid::clearRow(int rowindex)
+{
+    for(int i = 0; i<gridHeight; i++)
+    {
+        grids[rowindex][i].occupiedspace = false;
+        grids[rowindex][i].movingspace = false;
+    }
+}
+
+void gamegrid::pushRowDown(int rowindex)
+{
+    for(int i = 0; i<gridWidth; i++)
+    {
+        if(grids[rowindex+1][i].occupiedspace)
+        {
+            grids[rowindex+1][i].occupiedspace = true;
+            grids[rowindex][i].occupiedspace = false;
+        }
+    }
+}
+
+void gamegrid::clearAll()
+{
+    for(int row = 0; row<gridWidth; row++)
+    {
+        for(int col = 0; col<gridHeight; col++)
+        {
+            grids[row][col].occupiedspace = false;
+            grids[row][col].movingspace = false;
+        }
+    }
+
+}
+
+
+bool gamegrid::checkRowFull()
+{
+    bool isRowFull = true;
+    for(int i = 0; i<gridHeight; i++)
+    {
+        for(int j = 0; j<gridWidth; j++)
+        {
+            if(!(grids[i][j].occupiedspace))
+            {
+                isRowFull = false;
+                break;
+            }
+        }
+        
+        if(isRowFull == true)
+        {
+            clearRow(i);
+            pushRowDown(i-1);
+
+        }
+    }
 }
